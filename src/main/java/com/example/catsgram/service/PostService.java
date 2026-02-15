@@ -30,10 +30,10 @@ public class PostService {
     }
 
     public Post create(Post post) {
-        post.setId(uniqueId++);
         if(userService.findUserByEmail(post.getAuthor())==null){
             throw new UserNotFoundException(String.format("Пользователь %s не найден", post.getAuthor()));
         }
+        post.setId(uniqueId++);
         posts.put(post.getId(), post);
         return post;
     }

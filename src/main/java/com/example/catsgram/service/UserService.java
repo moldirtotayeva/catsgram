@@ -17,10 +17,10 @@ public class UserService {
 
     public User createUser(User user) {
         if (user.getEmail() == null || user.getEmail().isEmpty()) {
-            throw new InvalidEmailException("Email is empty");
+            throw new InvalidEmailException("Поле 'email' не должно быть пустым");
         }
         if (users.containsKey(user.getEmail())) {
-            throw new UserAlreadyExistException("User already exists");
+            throw new UserAlreadyExistException("Пользователь с таким email уже существует");
         }
         users.put(user.getEmail(), user);
         return user;

@@ -1,5 +1,6 @@
 package com.example.catsgram.controller;
 
+import com.example.catsgram.exceptions.IncorrectParameterException;
 import com.example.catsgram.model.Post;
 import com.example.catsgram.service.PostService;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -26,7 +27,8 @@ public class PostFeedController {
         FriendsParams friendsParams = parseParams(params);
 
         if (friendsParams == null || friendsParams.getFriends().isEmpty()) {
-            throw new IllegalArgumentException("Неверно заполнены параметры");
+            throw new IncorrectParameterException("friends");
+            //throw new IllegalArgumentException("Неверно заполнены параметры");
         }
 
         List<Post> result = new ArrayList<>();

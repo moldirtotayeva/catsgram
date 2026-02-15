@@ -1,7 +1,5 @@
 package com.example.catsgram.controller;
 
-import com.example.catsgram.exceptions.InvalidEmailException;
-import com.example.catsgram.exceptions.UserAlreadyExistException;
 import com.example.catsgram.model.User;
 import com.example.catsgram.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,5 +1,7 @@
 package com.example.catsgram.controller;
 
+import com.example.catsgram.exceptions.IncorrectParameterException;
+import com.example.catsgram.exceptions.PostNotFoundException;
 import com.example.catsgram.model.Post;
 import com.example.catsgram.service.PostService;
 
@@ -28,10 +30,13 @@ public class PostController {
             @RequestParam(value = "sort", defaultValue = "desc", required = false) String sort) {
 
         if (!(sort.equals("asc") || sort.equals("desc"))) {
-            throw new IllegalArgumentException();
+            throw new IncorrectParameterException("sort");
         }
-        if (page < 0 || size <= 0) {
-            throw new IllegalArgumentException();
+        if (page < 0) {
+            throw new IncorrectParameterException("page");
+        }
+        if (size <= 0) {
+            throw new IncorrectParameterException("size");
         }
 
         Integer from = page * size;
@@ -39,8 +44,8 @@ public class PostController {
     }
 
     @GetMapping("/posts/{postId}")
-    public Optional<Post> findById(@PathVariable int postId) {
-        return postService.findById(postId);
+    public Post findById(@PathVariable int postId) {
+        return postService.findById(postId).orElseThrow(() -> new PostNotFoundException("Пост не найден"));
     }
 
     @PostMapping("/post")
