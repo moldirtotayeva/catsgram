@@ -1,0 +1,12 @@
+package com.example.catsgram.dao;
+
+import com.example.catsgram.model.User;
+
+import java.util.List;
+import java.util.Optional;
+
+public interface UserDao {
+    Optional<User> findById(String id);
+    List<User> findAll();
+    User create(User user);
+}

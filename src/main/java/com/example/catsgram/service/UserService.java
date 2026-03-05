@@ -1,44 +1,28 @@
 package com.example.catsgram.service;
 
+import com.example.catsgram.dao.UserDao;
 import com.example.catsgram.exceptions.InvalidEmailException;
 import com.example.catsgram.exceptions.UserAlreadyExistException;
 import com.example.catsgram.model.User;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
 
 @Service
+@RequiredArgsConstructor
 public class UserService {
-   private final Map<String, User> users = new HashMap<>();
+  private final UserDao userDao;
 
-    public Collection<User> getUsers() {
-        return users.values();
-    }
+  public Optional<User> findUserById(String id){
+      return userDao.findById(id);
+  }
 
-    public User createUser(User user) {
-        if (user.getEmail() == null || user.getEmail().isEmpty()) {
-            throw new InvalidEmailException("Поле 'email' не должно быть пустым");
-        }
-        if (users.containsKey(user.getEmail())) {
-            throw new UserAlreadyExistException("Пользователь с таким email уже существует");
-        }
-        users.put(user.getEmail(), user);
-        return user;
-    }
+  public List<User> findAllUsers(){
+      return userDao.findAll();
+  }
 
-    public User updateUser(User user) {
-        if(user.getEmail() == null || user.getEmail().isEmpty()){
-            throw new InvalidEmailException("Email is empty");
-        }
-        users.put(user.getEmail(), user);
-        return user;
-    }
-
-    public User findUserByEmail(String email) {
-        if (email==null || email.isEmpty()) {
-            return null;
-        }
-        return users.get(email);
-    }
-
+  public User creatUser(User user){
+      return userDao.create(user);
+  }
 }

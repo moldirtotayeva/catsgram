@@ -5,35 +5,36 @@ import com.example.catsgram.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.Collection;
+import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/users")
 public class UserController {
-    public UserService userService;
+    private final UserService userService;
 
-    @Autowired
     public UserController(UserService userService) {
         this.userService = userService;
     }
 
     @GetMapping
-    public Collection<User> getUsers() {
-        return userService.getUsers();
+    public List<User> getUsers() {
+        return userService.findAllUsers();
     }
 
-    @GetMapping("/user/{userEmail}")
-    public User getUser(@PathVariable String userEmail) {
-        return userService.findUserByEmail(userEmail);
+    @GetMapping("/{login}")
+    public Optional<User> getUser(@PathVariable String login) {
+        return userService.findUserById(login);
     }
 
     @PostMapping
     public User create(@RequestBody User user) {
-       return userService.createUser(user);
+       return userService.creatUser(user);
     }
 
-    @PutMapping
-    public User update(@RequestBody User user) {
-        return userService.updateUser(user);
-    }
+//    @PutMapping
+//    public User update(@RequestBody User user) {
+//        return userService.updateUser(user);
+//    }
 
 }
